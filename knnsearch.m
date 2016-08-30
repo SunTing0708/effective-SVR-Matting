@@ -1,5 +1,5 @@
 function [idx,D]=knnsearch(varargin)
-%找到K个相邻的点
+%Find K nearest point
 % Check inputs
 [Q,R,K,fident] = parseinputs(varargin{:});
 %Qtest samples  R:TRAINING 

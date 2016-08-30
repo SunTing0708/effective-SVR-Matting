@@ -6,16 +6,16 @@ Image=reshape(double(I),size(I,1)*size(I,2),1);
 alpha=reshape(mask,size(I,1)*size(I,2),1);
 alpha(alpha==-1)=0;
 
-%%利用KNN找到最近的距离 生成训练和测试数据
+
 [xf,yf]=find(Foremask==1);ForePoint=[xf,yf];
 [xb,yb]=find(Backmask==1);BackPoint=[xb,yb];
 [xu,yu]=find(UnlableRegion==1);TestSample=[xu,yu];
 [~,D1]=knnsearch(TestSample,ForePoint);
 [~,D2]=knnsearch(TestSample,BackPoint);
 [~,idx]=sort(D1+D2);
-UnLabelSort=TestSample(idx,:);%未知像素点的坐标
+UnLabelSort=TestSample(idx,:);
 n=size(TestSample,1);
-%%对测试样本分块
+
 r=20;p={};
 for i=1:n
   if(isempty(UnLabelSort))
@@ -27,7 +27,7 @@ for i=1:n
       UnLabelSort(index==1,:)=[];
   end
 end
-%%找到每一块的距离最近的几个前景和背景点（与论文相比省略了相似度的计算） 然后训练SVR
+
 K=20;
 for j=1:size(p,2)
     O=mean(p{1,j});
